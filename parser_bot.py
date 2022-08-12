@@ -71,7 +71,7 @@ LIST_IS_EMPTY = 'Список пустой'
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-RETRY_TIME_MINUTES = 3
+RETRY_TIME_MINUTES = 330
 ENDPOINT = os.getenv('ENDPOINT')
 
 HOMEWORK_STATUSES = {
@@ -159,18 +159,37 @@ def parse_status(current_timestamp):
     personal_info = ''
     for review in reviews:
         review_date = review.select('cat-brand-ugc-date > a')[0].text.strip()
-        if 'Сегодня' in review_date:
-            review_author = 'Автор:' + review.select('cat-brand-name > a')[0].text.strip()
-            review_rating = 'Рейтинг:' + review.find(
+        company_name = review.select('cat-brand-name > a')[1].text.strip()
+        if 'Сегодня' in review_date and company_name == 'Вектор':
+            review_url = (
+                'Источник: ' + review.select('cat-brand-name')[0].text.strip()
+            )
+
+            review_author = (
+                'Автор: ' + review.select('cat-brand-name > a')[0].text.strip()
+            )
+
+            review_rating = 'Рейтинг: ' + review.find(
                 'li', class_='review-estimation__item--checked'
             ).text.strip()
+
             review_text = ''
-            comments = 'Отзыв:' + review.select('.t-text > .t-rich-text__p')
+            comments = review.select('.t-text > .t-rich-text__p')
             for comment in comments:
                 review_text += ' ' + comment.text.strip()
-            review_text = re.sub(r'^.*?Показать целиком ', '', review_text).strip().replace('  ', ' ')
-            personal_info = review_author + '\n' + review_rating + '\n' + review_text + '\n'
+
+            review_text = 'Отзыв: ' + re.sub(
+                r'^.*?Показать целиком ', '', review_text
+            ).strip().replace('  ', ' ')
+
+            personal_info = (
+                review_author + '\n' +
+                review_rating + '\n' +
+                review_text + '\n'
+            )
+
             ans += personal_info + '\n\n'
+
     return ans
 
 
