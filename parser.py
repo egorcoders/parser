@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as BS
 
+
+
 page = 1
 
 while True:

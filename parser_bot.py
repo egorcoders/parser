@@ -2,7 +2,8 @@ import logging
 import os
 import re
 import time
-from pathlib import Path
+import datetime as dt
+t = dt.datetime.now()
 
 import requests
 import telegram
@@ -148,7 +149,7 @@ def send_message(bot, message):
 
 def parse_status(current_timestamp):
     """Делает запрос к единственному эндпоинту API-сервиса."""
-    timestamp = current_timestamp or int(time.time())
+    timestamp = t.strftime('%m/%d/%Y, %H:%M')
     html_text = requests.get(ENDPOINT)
     soup = Bs(html_text.text, 'lxml')
     reviews = soup.find_all(
@@ -184,6 +185,7 @@ def parse_status(current_timestamp):
 
             personal_info = (
                 review_author + '\n' +
+                timestamp + '\n' +
                 review_rating + '\n' +
                 review_text + '\n'
             )
