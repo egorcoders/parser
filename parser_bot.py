@@ -149,7 +149,7 @@ def send_message(bot, message):
 
 def parse_status(current_timestamp):
     """Делает запрос к единственному эндпоинту API-сервиса."""
-    timestamp = t.strftime('%m/%d/%Y, %H:%M')
+    timestamp = t.strftime('%m/%d/%Y')
     html_text = requests.get(ENDPOINT)
     soup = Bs(html_text.text, 'lxml')
     reviews = soup.find_all(
@@ -161,7 +161,8 @@ def parse_status(current_timestamp):
     for review in reviews:
         review_date = review.select('cat-brand-ugc-date > a')[0].text.strip()
         company_name = review.select('cat-brand-name > a')[1].text.strip()
-        if 'Сегодня' in review_date and company_name == 'Вектор':
+        if 'Вчера' in review_date and company_name != 'Вектор':
+            review_format_date = review_date.replace('Вчера в', timestamp)
             review_url = (
                 'Источник: ' + review.select('cat-brand-name')[0].text.strip()
             )
@@ -185,7 +186,7 @@ def parse_status(current_timestamp):
 
             personal_info = (
                 review_author + '\n' +
-                timestamp + '\n' +
+                review_format_date + '\n' +
                 review_rating + '\n' +
                 review_text + '\n'
             )
