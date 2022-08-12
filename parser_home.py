@@ -27,7 +27,7 @@ def site_parsing():
             review_text = re.sub(r'^.*?Показать целиком ', '', review_text).strip().replace('  ', ' ')
             print(review_author, review_date, review_rating, review_text, sep='\n')
             print('')
-        
+
         # company = review.select('.course-card-provider')[0].text
         # details = (
         #     review.find('div', class_='course-card-excerpt')
