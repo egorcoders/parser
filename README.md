@@ -1,3 +1,3 @@
 # Parser
 
-A parser for website scraping.
+A parser for website scraping websites.
