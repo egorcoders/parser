@@ -161,10 +161,10 @@ def parse_status(current_timestamp):
     for review in reviews:
         review_date = review.select('cat-brand-ugc-date > a')[0].text.strip()
         company_name = review.select('cat-brand-name > a')[1].text.strip()
-        if 'Вчера' in review_date and company_name != 'Вектор':
-            review_format_date = review_date.replace('Вчера в', timestamp)
+        if 'Сегодня' in review_date and company_name != 'Вектор':
+            review_format_date = review_date.replace('Сегодня в', timestamp)
             review_url = (
-                'Источник: ' + review.select('cat-brand-name')[0].text.strip()
+                'Источник: ' + review.find('a', class_='link name t-text t-text--bold').get('href')
             )
 
             review_author = (
@@ -185,6 +185,7 @@ def parse_status(current_timestamp):
             ).strip().replace('  ', ' ')
 
             personal_info = (
+                review_url + '\n' +
                 review_author + '\n' +
                 review_format_date + '\n' +
                 review_rating + '\n' +

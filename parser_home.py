@@ -18,6 +18,7 @@ def site_parsing():
         review_date = review.select('cat-brand-ugc-date > a')[0].text.strip()
         company_name = review.select('cat-brand-name > a')[0].text
         if 'Сегодня' in review_date:
+            review_url = review.find('a', class_='link name t-text t-text--bold').get('href')
             review_author = review.select('cat-brand-name > a')[0].text.strip()
             review_rating = review.find(
                 'li', class_='review-estimation__item--checked'
@@ -27,7 +28,7 @@ def site_parsing():
             for comment in comments:
                 review_text += ' ' + comment.text.strip()
             review_text = re.sub(r'^.*?Показать целиком ', '', review_text).strip().replace('  ', ' ')
-            print(company_name, review_author, current_date, review_rating, review_text, sep='\n')
+            print(review_url, company_name, review_author, current_date, review_rating, review_text, sep='\n')
             print('')
 
         # company = review.select('.course-card-provider')[0].text
