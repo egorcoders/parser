@@ -164,7 +164,9 @@ def parse_status(current_timestamp):
         if 'Сегодня' in review_date and company_name != 'Вектор':
             review_format_date = review_date.replace('Сегодня в', timestamp)
             review_url = (
-                'Источник: ' + review.find('a', class_='link name t-text t-text--bold').get('href')
+                'Источник: ' + review.find(
+                    'a', class_='link name t-text t-text--bold'
+                ).get('href')
             )
 
             review_author = (
