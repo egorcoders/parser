@@ -42,7 +42,7 @@ ENDPOINT = 'https://ufa.flamp.ru/feed/'
 RETRY_TIME_SECONDS = 60 * 60 * 24
 
 
-def send_message(bot, message):
+def send_message(bot, message: str) -> None:
     """Отправляет сообщение пользователю в Телеграм."""
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
@@ -54,7 +54,7 @@ def send_message(bot, message):
     logging.info(f'Message "{message}" is sent')
 
 
-def parse_status(current_timestamp):
+def parse_status(current_timestamp: dt.datetime) -> str:
     """Делает запрос к единственному эндпоинту API-сервиса."""
     timestamp = t.strftime('%m/%d/%Y')
     html_text = requests.get(ENDPOINT)
@@ -115,7 +115,7 @@ def parse_status(current_timestamp):
     return ans
 
 
-def check_tokens():
+def check_tokens() -> bool:
     """Проверяет доступность переменных окружения."""
     for key in (TELEGRAM_TOKEN, TELEGRAM_CHAT_ID, ENDPOINT):
         if key is None:
@@ -128,12 +128,12 @@ def check_tokens():
 
 
 def add_to_db(
-    review_author,
-    review_url,
-    review_format_date,
-    review_rating,
-    review_text,
-):
+    review_author: str,
+    review_url: str,
+    review_format_date: dt.datetime,
+    review_rating: int,
+    review_text: str,
+) -> None:
     '''Создание БД SQLite'''
     db = sqlite3.connect('parser.db')
     c = db.cursor()
@@ -162,7 +162,7 @@ def add_to_db(
         db.commit()
 
 
-def main():
+def main() -> None:
     """Основная логика работы бота."""
     if not check_tokens():
         raise GlobalsError('Ошибка глобальной переменной. Смотрите логи.')
