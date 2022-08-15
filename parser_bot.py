@@ -16,15 +16,30 @@ t = dt.datetime.now()
 load_dotenv()
 
 
+class MessageSendingError(Exception):
+    """Ошибка отправки сообщения."""
+
+    pass
+
+
+class GlobalsError(Exception):
+    """Ошибка, если есть пустые глобальные переменные."""
+
+    pass
+
+
 FAILURE_TO_SEND_MESSAGE = '{error}, {message}'
 GLOBAL_VARIABLE_IS_MISSING = 'Отсутствует глобальная переменная'
 GLOBAL_VARIABLE_IS_EMPTY = 'Пустая глобальная переменная'
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
+# os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_TOKEN = '5236695462:AAHd0R2uGUt2YWYyxFOv_0egS4mKPOBx__o'
+# os.getenv('TELEGRAM_CHAT_ID')
+TELEGRAM_CHAT_ID = 538348353
+# os.getenv('ENDPOINT')
+ENDPOINT = 'https://ufa.flamp.ru/feed/'
 
 RETRY_TIME_SECONDS = 60 * 60 * 24
-ENDPOINT = os.getenv('ENDPOINT')
 
 
 def send_message(bot, message):
@@ -95,6 +110,8 @@ def parse_status(current_timestamp):
                 review_rating,
                 review_text,
             )
+        else:
+            ans = "На сегодня у 'Вкусно — и точка' нет отзывов."
     return ans
 
 
