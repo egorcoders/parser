@@ -4,6 +4,7 @@ import os
 import re
 import sqlite3
 import time
+from typing import Any, Union
 
 import requests
 import telegram
@@ -42,7 +43,7 @@ ENDPOINT = 'https://ufa.flamp.ru/feed/'
 RETRY_TIME_SECONDS = 60 * 60 * 24
 
 
-def send_message(bot, message: str) -> None:
+def send_message(bot: Any, message: Union[dt.datetime, int, str]) -> None:
     """Отправляет сообщение пользователю в Телеграм."""
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
@@ -54,7 +55,9 @@ def send_message(bot, message: str) -> None:
     logging.info(f'Message "{message}" is sent')
 
 
-def parse_status(current_timestamp: dt.datetime) -> str:
+def parse_status(
+    current_timestamp: dt.datetime
+) -> Union[dt.datetime, int, str]:
     """Делает запрос к единственному эндпоинту API-сервиса."""
     timestamp = t.strftime('%m/%d/%Y')
     html_text = requests.get(ENDPOINT)
