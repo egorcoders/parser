@@ -137,7 +137,7 @@ def add_to_db(
     review_rating: int,
     review_text: str,
 ) -> None:
-    '''Создание БД SQLite'''
+    '''Создание БД SQLite и добавление данных.'''
     db = sqlite3.connect('parser.db')
     c = db.cursor()
     c = db.execute('''CREATE TABLE IF NOT EXISTS users (
