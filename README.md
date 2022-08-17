@@ -54,8 +54,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Для запуска бота:
+Запустить бота:
+
+Для Windows:
 
 ```python
-python3 parser_bot.py.
+python parser_bot.py
+```
+
+Для Mac/Linux:
+
+```python
+python3 parser_bot.py
 ```
