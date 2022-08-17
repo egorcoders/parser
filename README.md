@@ -54,7 +54,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Для запуска бота:
+Запустить бота:
 
 Для Windows:
 
