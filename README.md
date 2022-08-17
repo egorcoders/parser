@@ -28,42 +28,40 @@
 git clone https://github.com/egorcoders/parser.git
 ```
 
+---
+
 Создать `.env` файл на уровне на уровне проекта с указаниме данных:
 
 - TELEGRAM_TOKEN - Телеграм токен, специальный ключ от бота, с помощью которого его можно подключать к сторонним сервисам
 - TELEGRAM_CHAT_ID - ID чата Телеграм
 - ENDPOINT = 'https://ufa.flamp.ru/feed/'
 
+---
+
 Создать и активировать виртуальное пространство и установить зависимости:
 
-Для Windows:
-
 ```python
+# Windows
 cd parser
 python -m venv venv
 source venv/Scripts/activate
 pip install -r requirements.txt
-```
 
-Для Mac/Linux:
-
-```python
+# Mac/Linux
 cd parser
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+---
+
 Запустить бота:
 
-Для Windows:
-
 ```python
+# Windows
 python parser_bot.py
-```
 
-Для Mac/Linux:
-
-```python
+# Mac/Linux
 python3 parser_bot.py
 ```
